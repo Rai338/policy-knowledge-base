@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- 禁止浏览器缓存入口页：避免改版后仍加载旧 index.html（进而引用旧版 JS） -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>政策知识库</title>
+  <!-- 前端构建号：与后端 app/core/config.py 的 BUILD_ID 保持一致。
+       启动时若与 /api/meta/theme 返回的 build 不一致，说明浏览器用了缓存的旧页面，
+       前端会自动带时间戳重载一次（自愈），避免"改了却一直是旧页面"。 -->
+  <script>window.PKB_BUILD = '20260930a';</script>
+  <!-- 内联标签页图标：避免浏览器自动请求 /favicon.ico 而在控制台产生 404 -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231E817B'/%3E%3Ctext x='16' y='23' font-size='19' font-family='sans-serif' font-weight='700' text-anchor='middle' fill='%23ffffff'%3E%E6%94%BF%3C/text%3E%3C/svg%3E" />
+  <script>
+    /* 双击本地文件（file://）打开时，自动跳转到本地服务地址：
+       ① 服务端对入口页禁用缓存，保证总是最新版本；
+       ② 登录态与 http 同源，避免 file:// 下要重复登录。
+       跳转链接带时间戳，确保绕过任何历史缓存。 */
+    (function () {
+      if (location.protocol !== 'file:') return;
+      var HOST = 'http://127.0.0.1:8000';
+      var jumped = false;
+
+      function jump() {
+        if (jumped) return;
+        jumped = true;
+        location.replace(HOST + '/?t=' + Date.now());
+      }
+
+      function showTip() {
+        if (jumped) return;
+        jumped = true;
+        var html = '<div style="padding:60px 24px;text-align:center;font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#6D7C78">'
+          + '<div style="font-size:18px;font-weight:600;color:#0B1220;margin-bottom:12px">未检测到本地服务</div>'
+          + '<div style="font-size:14px;line-height:2">请先双击项目根目录的 <b>启动.bat</b> 启动服务，再刷新本页。</div>'
+          + '</div>';
+        function paint() {
+          var el = document.getElementById('app');
+          if (el) { el.innerHTML = html; } else { document.body.innerHTML = html; }
+        }
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', paint);
+        } else { paint(); }
+      }
+
+      try {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', HOST + '/api/health', true);
+        xhr.timeout = 2500;
+        xhr.onload = jump;
+        xhr.ontimeout = showTip;
+        xhr.onerror = showTip;
+        xhr.send();
+      } catch (e) { showTip(); }
+    })();
+  </script>
+  <link rel="stylesheet" href="./vendor/element-plus.css?v=20260930a" />
+  <link rel="stylesheet" href="./assets/css/theme.css?v=20260930a" />
+</head>
+<body>
+  <div id="app">
+    <div style="padding:40px;text-align:center;color:#6D7C78">页面加载中…</div>
+  </div>
+
+  <script src="./vendor/vue.global.prod.js?v=20260930a"></script>
+  <script src="./vendor/element-plus.full.min.js?v=20260930a"></script>
+  <script src="./vendor/zh-cn.js?v=20260930a"></script>
+  <script src="./assets/js/api.js?v=20260930a"></script>
+  <script src="./assets/js/utils.js?v=20260930a"></script>
+  <script src="./assets/js/views/home.js?v=20260930a"></script>
+  <script src="./assets/js/views/overview.js?v=20260930a"></script>
+  <script src="./assets/js/views/documents.js?v=20260930a"></script>
+  <script src="./assets/js/views/analysis.js?v=20260930a"></script>
+  <script src="./assets/js/views/conflict.js?v=20260930a"></script>
+  <script src="./assets/js/views/crawl.js?v=20260930a"></script>
+  <script src="./assets/js/views/admin.js?v=20260930a"></script>
+  <script src="./assets/js/views/manage.js?v=20260930a"></script>
+  <script src="./assets/js/views/login.js?v=20260930a"></script>
+  <script src="./assets/js/views/logs.js?v=20260930a"></script>
+  <script src="./assets/js/views/users.js?v=20260930a"></script>
+  <script src="./assets/js/app.js?v=20260930a"></script>
+</body>
+</html>

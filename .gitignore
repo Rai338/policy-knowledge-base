@@ -1,0 +1,24 @@
+# 运行时数据与索引（含 SQLite 数据库、上传文件、日志、导出）
+data/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# 环境变量与密钥
+.env
+.env.*
+*.key
+
+# 工具 / 编辑器
+.workbuddy/
+.obsidian/
+.idea/
+.vscode/
+
+# 系统
+.DS_Store
+Thumbs.db

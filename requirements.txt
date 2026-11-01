@@ -1,0 +1,22 @@
+# 政策法规智能助手 - 依赖清单
+fastapi>=0.110
+uvicorn>=0.27
+python-multipart>=0.0.9
+sqlalchemy>=2.0
+pymysql>=1.1
+numpy>=1.26
+pymupdf>=1.24
+python-docx>=1.1
+apscheduler>=3.10
+httpx>=0.27
+beautifulsoup4>=4.12
+lxml>=5.1
+
+# 可选（按需启用）
+# 向量后端：FAISS（单机演示）/ Milvus（生产）
+# faiss-cpu>=1.8
+# pymilvus>=2.4
+# 数据库切换 PostgreSQL（默认已连教师机 MySQL）
+# psycopg2-binary>=2.9
+# 本地向量模型 BGE-M3（PKB_EMBEDDING_BACKEND=bge3 时启用）
+# FlagEmbedding>=1.2
